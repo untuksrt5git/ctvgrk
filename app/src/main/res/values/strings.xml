@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CTVGRK</string>
+    <string name="login">Login</string>
+    <string name="email">Email / Username</string>
+    <string name="password">Password</string>
+    <string name="platform">Platform</string>
+    <string name="ezviz">EZVIZ</string>
+    <string name="hikconnect">Hik-Connect</string>
+    <string name="cameras">Cameras</string>
+    <string name="status_ready">Ready</string>
+    <string name="status_logging_in">Logging in…</string>
+    <string name="status_error">Error</string>
+</resources>
