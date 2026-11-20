@@ -23,18 +23,20 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
 
-      - name: Create gradle wrapper if missing
+      - name: Create gradle wrapper
         run: |
           if [ ! -f gradlew ]; then
-            gradle wrapper --gradle-version 8.5 || true
+            gradle wrapper --gradle-version 8.5
           fi
-          chmod +x gradlew || true
+          chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
         env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+          GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx4g"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -42,8 +44,11 @@ jobs:
           name: ctvgrk-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 14
+          if-no-files-found: warn
 
       - name: List output
+        if: always()
         run: |
-          echo "=== APK Output ==="
-          find app/build/outputs -name "*.apk" || true
+          echo "=== Looking for APK ==="
+          find . -name "*.apk" 2>/dev/null || true
+          ls -la app/build/outputs/ 2>/dev/null || true
